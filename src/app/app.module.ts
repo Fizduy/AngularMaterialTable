@@ -26,6 +26,7 @@ import { TableComponent } from './table/table.component';
     MatSortModule,
     RouterModule.forRoot([
       { path: '', component: TableComponent },
+      { path: 'document', component: TableComponent},
     ])
   ],
   providers: [],

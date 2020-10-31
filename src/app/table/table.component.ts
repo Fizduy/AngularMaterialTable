@@ -1,9 +1,10 @@
 import {Component, ViewChild, AfterViewInit} from '@angular/core';
+import {Router} from '@angular/router';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {merge, of as observableOf} from 'rxjs';
 import {catchError, map, startWith, switchMap} from 'rxjs/operators';
-import {GithubIssue, GithubApi, TableDataService } from '../table-data.service';
+import {Document, TableDataService } from '../table-data.service';
 
 /**
  * @title Table retrieving data through HTTP
@@ -14,8 +15,8 @@ import {GithubIssue, GithubApi, TableDataService } from '../table-data.service';
   styleUrls: ['./table.component.css']
 })
 export class TableComponent implements AfterViewInit {
-  displayedColumns: string[] = ['created', 'state', 'number', 'title'];
-  data: GithubIssue[] = [];
+  displayedColumns: string[] = ['created', 'type', 'title', 'address'];
+  data: Document[] = [];
 
   resultsLength = 0;
   isLoadingResults = true;
@@ -24,11 +25,9 @@ export class TableComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private exampleDatabase: TableDataService) {}
+  constructor(private exampleDatabase: TableDataService, private router: Router) {}
 
   ngAfterViewInit() {
-    //this.exampleDatabase = new ExampleHttpDatabase(this._httpClient);
-
     // If the user changes the sort order, reset back to the first page.
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
@@ -37,16 +36,16 @@ export class TableComponent implements AfterViewInit {
         startWith({}),
         switchMap(() => {
           this.isLoadingResults = true;
-          return this.exampleDatabase!.getRepoIssues(
+          return this.exampleDatabase!.getTableData(
             this.sort.active, this.sort.direction, this.paginator.pageIndex);
         }),
-        map((data: GithubApi) => {
+        map((data: Document[]) => {
           // Flip flag to show that loading has finished.
           this.isLoadingResults = false;
           this.isRateLimitReached = false;
-          this.resultsLength = data.total_count;
+          this.resultsLength = data.length;
 
-          return data.items;
+          return data;
         }),
         catchError(() => {
           this.isLoadingResults = false;
@@ -56,5 +55,9 @@ export class TableComponent implements AfterViewInit {
         })
       ).subscribe(data => this.data = data);
   }
+
+  open(row: Document){
+    this.router.navigate(['/document',{id: row.id}]);
+}
 }
 

@@ -14,6 +14,22 @@ export interface GithubIssue {
   title: string;
 }
 
+export interface Document {
+  id: string,
+  author? : {
+    account: string,
+    fio: string,
+    post: string
+  },
+  docCode: string,
+  docDate: string,
+  docName: string,
+  docType: string,
+  address: string,
+  status: string,
+  isSpecial: true | false
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -21,11 +37,9 @@ export class TableDataService {
 
   constructor(private _httpClient: HttpClient) {}
 
-  getRepoIssues(sort: string, order: string, page: number): Observable<GithubApi> {
-    const href = 'https://api.github.com/search/issues';
-    const requestUrl =
-        `${href}?q=repo:angular/components&sort=${sort}&order=${order}&page=${page + 1}`;
+  getTableData(sort: string, order: string, page: number): Observable<Document[]> {
+    const requestUrl = '/test-data.json';
 
-    return this._httpClient.get<GithubApi>(requestUrl);
+    return this._httpClient.get<Document[]>(requestUrl);
   }
 }
