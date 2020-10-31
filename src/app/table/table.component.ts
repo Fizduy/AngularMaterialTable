@@ -44,7 +44,10 @@ export class TableComponent implements AfterViewInit {
           return observableOf([]);
         })
       )
-      .subscribe(data => {this.data = new MatTableDataSource(data); this.data.sort = this.sort;});
+      .subscribe(data => {
+        this.data = new MatTableDataSource(data);
+        this.data.sort = this.sort;
+        this.data.paginator = this.paginator;});
   }
 
   open(row: Document){
