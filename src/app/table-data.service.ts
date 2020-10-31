@@ -37,7 +37,7 @@ export class TableDataService {
 
   constructor(private _httpClient: HttpClient) {}
 
-  getTableData(sort: string, order: string, page: number): Observable<Document[]> {
+  getTableData(): Observable<Document[]> {
     const requestUrl = '/test-data.json';
 
     return this._httpClient.get<Document[]>(requestUrl);
