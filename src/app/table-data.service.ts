@@ -18,6 +18,16 @@ export interface Document {
   isSpecial: true | false
 }
 
+export const DocType = {
+  'request': 'Запрос',
+  'certificate': 'Сертификат'
+}
+
+export const DocStatus = {
+  'registred': 'Зарегистрирован',
+  'accepted': 'Принят'
+}
+
 @Injectable({
   providedIn: 'root'
 })

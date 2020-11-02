@@ -1,0 +1,43 @@
+<h2>{{data.docName}}</h2>
+<mat-dialog-content class="mat-typography">
+<div *ngIf="(data.author != null)">
+    <p>Создал: {{data.author.fio}} ({{data.author.post}})</p>
+</div>
+    <table class="example-full-width" cellspacing="0">
+        <tr>
+          <td><mat-form-field>
+            <mat-label>Дата создания</mat-label>
+            <input matInput [matDatepicker]="picker" [formControl]="date">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker> 
+          </mat-form-field></td>
+          <td><mat-form-field>
+            <mat-label>Тип документа</mat-label>
+            <mat-select [(value)]="data.docType">
+                <mat-option *ngFor="let type of docType | keyvalue" [value]="type.key">{{type.value}}</mat-option>
+            </mat-select>
+          </mat-form-field></td>
+          
+      </tr>
+    <tr>
+      <td>
+        <mat-checkbox [(checked)]="data.isSpecial">"Специальный"</mat-checkbox>
+    </td>
+      <td><mat-form-field>
+        <mat-label>Статус</mat-label>
+        <mat-select [(value)]="data.status">
+            <mat-option *ngFor="let type of docStatus | keyvalue" [value]="type.key">{{type.value}}</mat-option>
+        </mat-select>
+      </mat-form-field></td>
+      
+    </tr>
+    </table>
+
+    <p>
+      <mat-form-field class="example-full-width">
+        <mat-label>Адрес</mat-label>
+        <textarea matInput [formControl]="address"></textarea>
+        
+      </mat-form-field>
+    </p>
+</mat-dialog-content>
