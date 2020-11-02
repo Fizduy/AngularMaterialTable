@@ -1,5 +1,13 @@
 # AngularTable
 
+SPA с таблицей, получающей данные из файла test-data.json
+Реализована сортировка и пагинация.
+При выборе документа из таблицы - открывается карточка для редактирования данных
+
+TODO:
+- сохранение данных в localStorage
+- Создание нового документа
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.4.
 
 ## Development server
